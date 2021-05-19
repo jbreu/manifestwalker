@@ -1,13 +1,15 @@
 from Manifest import Manifest
 import config
 
-
 class SystemManifest(Manifest):
 
-    def __init__(self, manifestfile):
+    def __init__(self, manifestfile, parentfolder, level):
         from xml.dom import minidom
         from pathlib import Path
         from git import Git
+
+        currentfolder = f"{parentfolder}/level{level}"
+        Path(currentfolder).mkdir(parents=True, exist_ok=True)
 
         xmldoc = minidom.parse(manifestfile)
         itemlist = xmldoc.getElementsByTagName('project')
@@ -15,7 +17,7 @@ class SystemManifest(Manifest):
             repo = s.attributes['name'].value
             repo_short = repo[repo.index("/")+1:]
             print(s.attributes['name'].value)
-            if Path(f"tmp/{repo_short}").is_dir():
-                Git(f"tmp/{repo_short}").pull()
+            if Path(f"{currentfolder}/{repo_short}").is_dir():
+                Git(f"{currentfolder}/{repo_short}").pull()
             else:
-                Git("tmp").clone(f"{config.baseurl}{repo}.git", depth=1)
+                Git(f"{currentfolder}").clone(f"{config.baseurl}{repo}.git", depth=1)
