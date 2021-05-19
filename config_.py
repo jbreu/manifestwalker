@@ -1,2 +1,2 @@
 baseurl = 'ssh://github.com'
-systemmanifest = 'project/repo.git'
+systemrepo = 'project/repo.git'
