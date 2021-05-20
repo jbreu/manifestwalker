@@ -24,13 +24,13 @@ def processNode(repo, folder, level):
             git.Git(folder).clone(config.baseurl + config.systemrepo + ".git")
 
     systemmanifestfile = glob.glob(folder+repo_short+"/*system*.xml")
-    repotoolmanifestfile = glob.glob(folder+repo_short+"/*default*.xml")
+    #repotoolmanifestfile = glob.glob(folder+repo_short+"/*default*.xml")
 
     if systemmanifestfile:
         print(whitespace(level)+"Unfolding System Manifest")
-        return SystemManifest(systemmanifestfile[0], subfolder, 1)
-    elif repotoolmanifestfile:
-        print(whitespace(level)+"Unfolding Google Repo Tool Manifest")
-        return RepoToolManifest(repotoolmanifestfile[0], subfolder, 1)
+        return SystemManifest(systemmanifestfile[0], subfolder, level)
+    #elif repotoolmanifestfile:
+    #    print(whitespace(level)+"Unfolding Google Repo Tool Manifest")
+    #    return RepoToolManifest(repo, subfolder, level)
     else:
         print(whitespace(level)+"NOK")
