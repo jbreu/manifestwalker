@@ -4,33 +4,26 @@ import config
 from pathlib import Path
 from SystemManifest import SystemManifest
 from RepoToolManifest import RepoToolManifest
+from Repo import Repo
 
-def whitespace(level):
-    return ''.join([' '*level])
+def processNode(reponame, folder):
 
-def processNode(repo, folder, level):
+    repo = Repo()
 
-    subfolder = f"{folder}level{level}/"
-    repo_short = repo[repo.index("/")+1:]
-    #print(whitespace(level)+folder)
-    print(whitespace(level)+repo)
-    
-    # TODO put in separate function/class
-    if level==1:
-        if Path(folder+repo_short).is_dir():
-            git.Git(folder+repo_short).pull()
-        else:
-            Path(folder).mkdir(parents=True, exist_ok=True)
-            git.Git(folder).clone(config.baseurl + config.systemrepo + ".git")
+    repo.CloneOrPull(folder, reponame)
 
-    systemmanifestfile = glob.glob(folder+repo_short+"/*system*.xml")
+    systemmanifestfile = glob.glob(repo.repofolder+"/*system*.xml")
     #repotoolmanifestfile = glob.glob(folder+repo_short+"/*default*.xml")
 
     if systemmanifestfile:
-        print(whitespace(level)+"Unfolding System Manifest")
-        return SystemManifest(systemmanifestfile[0], subfolder, level)
+        #print(whitespace(level)+"Unfolding System Manifest")
+        systemmanifest = SystemManifest(systemmanifestfile[0], folder)
+        repo.children.extend(systemmanifest.children)
+
     #elif repotoolmanifestfile:
     #    print(whitespace(level)+"Unfolding Google Repo Tool Manifest")
     #    return RepoToolManifest(repo, subfolder, level)
-    else:
-        print(whitespace(level)+"NOK")
+    #else:
+    #    print("Leaf repo")
+
+    return repo
