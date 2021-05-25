@@ -6,11 +6,11 @@ from XMLManifestRepo import XMLManifestRepo
 from RepotoolRepo import RepotoolRepo
 from Repo import Repo
 
-def processNode(reponame, folder):
+def processNode(reponame, folder, remote=''):
 
     repo = Repo()
 
-    repo.CloneOrPull(folder, reponame)
+    repo.CloneOrPull(folder, reponame, remote)
 
     systemmanifestfile = glob.glob(repo.repofolder+"/*system*.xml")
     repotoolmanifestfile = glob.glob(repo.repofolder+"/*default*.xml")

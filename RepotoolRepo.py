@@ -9,7 +9,7 @@ import config
 class RepotoolRepo(Repo):
 
     def Init(self, repo_long, folder):
-        repo = repo_long[repo_long.index("/")+1:]
+        repo = repo_long[repo_long.rfind("/")+1:]
         repourl = config.baseurl + repo_long + ".git"
 
         unwindfolder = folder+repo+"_repounwind/"
