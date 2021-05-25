@@ -22,6 +22,5 @@ class XMLManifestRepo(Repo):
         self.children = []
         xmlprojects = xmldoc.getElementsByTagName('project')
         for s in xmlprojects:
-            #if s.attributes['remote'].value==config.valid_remote:
             repo = s.attributes['name'].value
             self.children.append(Processor.processNode(repo, folder, remotes[s.attributes['remote'].value]))
