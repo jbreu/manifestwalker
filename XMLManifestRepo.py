@@ -1,7 +1,8 @@
-from Manifest import Manifest
+from Repo import Repo
 import Processor
+import config
 
-class SystemManifest(Manifest):
+class XMLManifestRepo(Repo):
 
     def __init__(self, manifestfile, folder):
         from xml.dom import minidom
@@ -10,6 +11,6 @@ class SystemManifest(Manifest):
         itemlist = xmldoc.getElementsByTagName('project')
         self.children = []
         for s in itemlist:
-            repo = s.attributes['name'].value
-
-            self.children.append(Processor.processNode(repo, folder))
+            if s.attributes['remote'].value==config.valid_remote:
+                repo = s.attributes['name'].value
+                self.children.append(Processor.processNode(repo, folder))

@@ -2,8 +2,8 @@ import git
 import glob
 import config
 from pathlib import Path
-from SystemManifest import SystemManifest
-from RepoToolManifest import RepoToolManifest
+from XMLManifestRepo import XMLManifestRepo
+from RepotoolRepo import RepotoolRepo
 from Repo import Repo
 
 def processNode(reponame, folder):
@@ -13,17 +13,15 @@ def processNode(reponame, folder):
     repo.CloneOrPull(folder, reponame)
 
     systemmanifestfile = glob.glob(repo.repofolder+"/*system*.xml")
-    #repotoolmanifestfile = glob.glob(folder+repo_short+"/*default*.xml")
+    repotoolmanifestfile = glob.glob(repo.repofolder+"/*default*.xml")
 
     if systemmanifestfile:
-        #print(whitespace(level)+"Unfolding System Manifest")
-        systemmanifest = SystemManifest(systemmanifestfile[0], folder)
-        repo.children.extend(systemmanifest.children)
-
-    #elif repotoolmanifestfile:
-    #    print(whitespace(level)+"Unfolding Google Repo Tool Manifest")
-    #    return RepoToolManifest(repo, subfolder, level)
-    #else:
-    #    print("Leaf repo")
+        systemmanifestrepo = XMLManifestRepo(systemmanifestfile[0], folder)
+        repo.children.extend(systemmanifestrepo.children)
+    elif repotoolmanifestfile:
+        systemmanifestrepo = XMLManifestRepo(repotoolmanifestfile[0], folder)
+        repo.children.extend(systemmanifestrepo.children)
+        #repotoolrepo = RepotoolRepo(repo.repofolder, folder, repo.reponame)
+        #repo.children.append(repotoolrepo)
 
     return repo

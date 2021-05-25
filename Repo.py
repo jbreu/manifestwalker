@@ -27,5 +27,5 @@ class Repo:
             git.Git(folder).clone(config.baseurl + reponame + ".git")
 
         self.repofolder = folder+repo_short
-        self.reponame = repo_short
+        self.reponame = reponame
         self.children = []

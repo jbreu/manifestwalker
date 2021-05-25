@@ -3,7 +3,7 @@ import pathlib
 
 PIPE = "│"
 ELBOW = "└──"
-PIPE = "│   "
+PIPE_PREFIX = "│   "
 SPACE = "    "
 TEE = "├──"
 
@@ -12,7 +12,7 @@ def whitespace(level, lastentry=False):
     if lastentry:
         return ''.join([SPACE*level])
     else:
-        return ''.join([PIPE*level])
+        return ''.join([PIPE_PREFIX*level])
 
 def printTree(node, level=0, lastentry=False):
 
