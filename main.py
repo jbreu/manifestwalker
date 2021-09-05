@@ -9,4 +9,4 @@ if not os.path.exists('tmp'):
 
 root = Processor.processNode(config.systemrepo, "tmp/")
 
-TreePrinter.printTree(root)
+TreePrinter.printTree(root, 0, True)
