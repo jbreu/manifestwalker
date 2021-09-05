@@ -1,6 +1,6 @@
 from Repo import Repo
 import Processor
-import config
+
 
 class XMLManifestRepo(Repo):
 
@@ -17,8 +17,8 @@ class XMLManifestRepo(Repo):
             fetch = r.attributes['fetch'].value
             if not fetch.endswith('/'):
                 fetch += '/'
-            remotes[name]=fetch
-        
+            remotes[name] = fetch
+
         self.children = []
         xmlprojects = xmldoc.getElementsByTagName('project')
         for s in xmlprojects:
